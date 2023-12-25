@@ -1,25 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { QrReader } from "react-qr-reader";
-import { useState } from "react";
+import Main from "./pages/Main";
 
 function App() {
-  const [qrData, setQrData] = useState("");
+  // const handleError = (error) => {
+  //   console.log(error);
+  // };
 
-  const scan = (data) => {
-    if (data) {
-      setQrData(data);
-    }
-  };
-
-  const handleError = (error) => {
-    console.log(error);
-  };
   return (
     <>
       {" "}
-      <QrReader onResult={scan} onError={handleError} scanDelay={3000} />
-      <p>{qrData}</p>
+      <Main />{" "}
     </>
   );
 }
