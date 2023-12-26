@@ -34,7 +34,7 @@ const Main = () => {
             className="camera-window"
             onResult={scan}
             scanDelay={3000}
-            facingMode="environment"
+            constraints={{ facingMode: "environment" }}
           />
         )}
         <div className="data-div">
