@@ -63,6 +63,14 @@ const Main = () => {
         <button className="button-scan" onClick={() => setCamera(!camera)}>
           {camera ? "Close" : "Scan QR"}
         </button>
+        <div className="create-qr-div">
+          <a
+            href="https://extraordinary-cactus-e4a215.netlify.app/"
+            className="create-qr"
+          >
+            Create Your own QR code
+          </a>
+        </div>
       </div>
       {/* {qrData.map((val) => (
     <p>{val}</p>
