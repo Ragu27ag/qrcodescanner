@@ -4,24 +4,29 @@ import "../CSS/main.css";
 
 const Main = () => {
   const [qrData, setQrData] = useState([]);
+  const [qrDataStr, setQrDataStr] = useState("");
   const [camera, setCamera] = useState(false);
 
   const scan = (result, error) => {
     // console.log(typeof JSON.parse(result?.text));
     if (result) {
-      console.log(result?.text);
-      console.log(JSON.parse(result?.text));
+      setQrData([]);
+      setQrDataStr("");
+      console.log(result?.text.includes("{"));
+      // console.log(JSON.parse(result?.text));
       setCamera(false);
-      setQrData([JSON.parse(result?.text)]);
+      if (result?.text.includes("{")) {
+        setQrData([JSON.parse(result?.text)]);
+      } else setQrDataStr(result?.text);
     } else console.log(error);
   };
 
-  console.log(qrData);
+  console.log(qrData, qrDataStr);
   return (
     <div className="main-div">
       {" "}
       <div className="heading">
-        <h3>QR CODE SCANNER</h3>
+        <h2>QR CODE SCANNER</h2>
       </div>
       <div className="camera-div">
         {camera && (
@@ -29,37 +34,29 @@ const Main = () => {
             className="camera-window"
             onResult={scan}
             scanDelay={3000}
+            facingMode="environment"
           />
         )}
         <div className="data-div">
-          {qrData.map((val, i) => (
-            <>
-              <p>
+          {qrDataStr === "" ? (
+            qrData.map((val, i) => (
+              <>
                 <span>Name : </span>
-                {val.name}
-              </p>
-              <p>
+                <p>{val.name.toUpperCase()}</p>
+                <br />
                 <span>From : </span>
-                {val.from}
-              </p>{" "}
-              <p>
-                <span>To : </span>
-                {val.to}
-              </p>{" "}
-              <p>
-                <span>Depature : </span>
-                {val.depature}
-              </p>{" "}
-              <p>
+                <p>{val.from.toUpperCase()}</p> <br /> <span>To : </span>
+                <p>{val.to.toUpperCase()}</p> <br /> <span>Depature : </span>
+                <p>{val.depature}</p> <br />
                 <span>Arrival : </span>
-                {val.arrival}
-              </p>{" "}
-              <p>
+                <p>{val.arrival}</p> <br />
                 <span>Gate : </span>
-                {val.gate}
-              </p>
-            </>
-          ))}
+                <p>{val.gate}</p>
+              </>
+            ))
+          ) : (
+            <p>{qrDataStr}</p>
+          )}
         </div>
       </div>
       <div className="butt-div">
