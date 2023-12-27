@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { QrReader } from "modern-react-qr-reader";
+import QrReader from "modern-react-qr-reader";
 import "../CSS/main.css";
 
 const Main = () => {
@@ -12,12 +12,12 @@ const Main = () => {
     if (result) {
       setQrData([]);
       setQrDataStr("");
-      console.log(result?.text.includes("{"));
+      console.log(result?.includes("{"));
       // console.log(JSON.parse(result?.text));
       setCamera(false);
-      if (result?.text.includes("{")) {
-        setQrData([JSON.parse(result?.text)]);
-      } else setQrDataStr(result?.text);
+      if (result?.includes("{")) {
+        setQrData([JSON.parse(result)]);
+      } else setQrDataStr(result);
     } else console.log(error);
   };
 
@@ -32,7 +32,7 @@ const Main = () => {
         {camera && (
           <QrReader
             className="camera-window"
-            onResult={scan}
+            onScan={scan}
             scanDelay={3000}
             constraints={{ facingMode: "environment" }}
           />
