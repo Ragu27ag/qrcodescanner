@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import QrReader from "modern-react-qr-reader";
+import BarcodeScannerComponent from "react-qr-barcode-scanner";
+
 import "../CSS/main.css";
 
 const Main = () => {
@@ -7,18 +9,22 @@ const Main = () => {
   const [qrDataStr, setQrDataStr] = useState("");
   const [camera, setCamera] = useState(false);
 
-  const scan = (result, error) => {
+  const scan = (error, result) => {
     // console.log(typeof JSON.parse(result?.text));
     if (result) {
       setQrData([]);
       setQrDataStr("");
-      console.log(result?.includes("{"));
+      console.log(result?.text.includes("{"));
       // console.log(JSON.parse(result?.text));
       setCamera(false);
-      if (result?.includes("{")) {
-        setQrData([JSON.parse(result)]);
-      } else setQrDataStr(result);
+      if (result?.text.includes("{")) {
+        setQrData([JSON.parse(result.text)]);
+      } else setQrDataStr(result.text);
     } else console.log(error);
+  };
+
+  const handleError = (err) => {
+    console.log(err);
   };
 
   console.log(qrData, qrDataStr);
@@ -30,12 +36,13 @@ const Main = () => {
       </div>
       <div className="camera-div">
         {camera && (
-          <QrReader
-            className="camera-window"
-            onScan={scan}
-            scanDelay={3000}
-            constraints={{ facingMode: "environment" }}
-          />
+          // <QrReader
+          //   className="camera-window"
+          //   onScan={scan}
+          //   scanDelay={3000}
+          //   constraints={{ facingMode: "environment" }}
+          // />
+          <BarcodeScannerComponent width={500} height={500} onUpdate={scan} />
         )}
         <div className="data-div">
           {qrDataStr === "" ? (
