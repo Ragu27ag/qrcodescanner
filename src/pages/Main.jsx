@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { QrReader } from "react-qr-reader";
+import { QrReader } from "modern-react-qr-reader";
 import "../CSS/main.css";
 
 const Main = () => {
