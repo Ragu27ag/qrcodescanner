@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import QrReader from "modern-react-qr-reader";
+// import QrReader from "modern-react-qr-reader";
 import BarcodeScannerComponent from "react-qr-barcode-scanner";
 
 import "../CSS/main.css";
@@ -21,10 +21,6 @@ const Main = () => {
         setQrData([JSON.parse(result.text)]);
       } else setQrDataStr(result.text);
     } else console.log(error);
-  };
-
-  const handleError = (err) => {
-    console.log(err);
   };
 
   console.log(qrData, qrDataStr);
