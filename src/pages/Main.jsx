@@ -45,7 +45,7 @@ const Main = () => {
         // console.log(res);
 
         // setQrData([res]);
-        setQrData(result?.text);
+        setQrDataStr(result?.text);
       }
     } else console.log(error);
   };
