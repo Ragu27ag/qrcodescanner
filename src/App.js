@@ -1,5 +1,5 @@
 import "./App.css";
-import Main from "./pages/Main";
+import HtmlQr from "./pages/HtmlQr";
 
 function App() {
   // const handleError = (error) => {
@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       {" "}
-      <Main />{" "}
+      {/* <Main /> */} <HtmlQr />
     </>
   );
 }
