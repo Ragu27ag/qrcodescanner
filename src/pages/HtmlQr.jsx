@@ -4,6 +4,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 const HtmlQr = () => {
   //   const [res, setRes] = useState("");
   const [qrData, setQrData] = useState([]);
+  const [data, setData] = useState("");
 
   function getDateFromDayOfYear(year, dayOfYear) {
     const date = new Date(year, 0);
@@ -16,6 +17,8 @@ const HtmlQr = () => {
       let res = {};
 
       let str = values.split(" ");
+      let setStr = new Set(str);
+      str = [...setStr].filter((val) => val !== "");
       // let str = "M1AG/Ragunath RHKN7X CCUMAASG 607 097V00000000 000".split(" ");
       console.log(str);
 
