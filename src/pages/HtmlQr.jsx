@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 
 const HtmlQr = () => {
@@ -11,26 +11,26 @@ const HtmlQr = () => {
     return date;
   }
 
-  const getRes = useCallback((values) => {
-    let res = {};
-
-    let str = values.split(" ");
-    // let str = "M1AG/Ragunath RHKN7X CCUMAASG 607 097V00000000 000".split(" ");
-    console.log(str);
-
-    let barDate = str[4].slice(0, 3);
-
-    res.name = str[0].slice(2);
-    res.pnr = str[1];
-    res.from = str[2].slice(0, 3);
-    res.to = str[2].slice(3, 6);
-    res.airline = str[2].slice(6) + " " + str[3];
-    res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
-    res.class = str[4].slice(3, 4);
-    return res;
-  }, []);
-
   useEffect(() => {
+    const getRes = (values) => {
+      let res = {};
+
+      let str = values.split(" ");
+      // let str = "M1AG/Ragunath RHKN7X CCUMAASG 607 097V00000000 000".split(" ");
+      console.log(str);
+
+      let barDate = str[4].slice(0, 3);
+
+      res.name = str[0].slice(2);
+      res.pnr = str[1];
+      res.from = str[2].slice(0, 3);
+      res.to = str[2].slice(3, 6);
+      res.airline = str[2].slice(6) + " " + str[3];
+      res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
+      res.class = str[4].slice(3, 4);
+      return res;
+    };
+
     const qrCodeScanner = new Html5QrcodeScanner("reader", {
       qrbox: {
         width: 250,
@@ -44,7 +44,7 @@ const HtmlQr = () => {
     function success(result) {
       qrCodeScanner.clear();
       console.log(result);
-      let obj = getRes(result?.text);
+      let obj = getRes(result);
       console.log(obj);
 
       setQrData([obj]);
@@ -54,7 +54,7 @@ const HtmlQr = () => {
     function error(err) {
       console.log(err);
     }
-  }, [getRes]);
+  }, []);
 
   return (
     <div>
