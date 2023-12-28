@@ -8,14 +8,30 @@ const Main = () => {
   const [qrData, setQrData] = useState([]);
   const [qrDataStr, setQrDataStr] = useState("");
   const [camera, setCamera] = useState(false);
-  let res = {};
-  let str;
 
   function getDateFromDayOfYear(year, dayOfYear) {
     const date = new Date(year, 0);
     date.setDate(dayOfYear);
     return date;
   }
+
+  const getRes = (values) => {
+    let res = {};
+
+    let str = values.split(" ");
+    console.log(str);
+
+    let barDate = str[4].slice(0, 3);
+
+    res.name = str[0].slice(2);
+    res.pnr = str[1];
+    res.from = str[2].slice(0, 3);
+    res.to = str[2].slice(3, 6);
+    res.airline = str[2].slice(6) + " " + str[3];
+    res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
+    res.class = str[4].slice(3, 4);
+    return res;
+  };
 
   const scan = (error, result) => {
     console.log(result?.text);
@@ -28,22 +44,10 @@ const Main = () => {
       if (result?.text.includes("{")) {
         setQrData([JSON.parse(result.text)]);
       } else {
-        str = result.text.split(" ");
-        console.log(str);
+        let obj = getRes(result?.text);
+        console.log(obj);
 
-        let barDate = str[4].slice(0, 3);
-
-        res.name = str[0].slice(2);
-        res.pnr = str[1];
-        res.from = str[2].slice(0, 3);
-        res.to = str[2].slice(3, 6);
-        res.airline = str[2].slice(6) + " " + str[3];
-        res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
-        res.class = str[4].slice(3, 4);
-
-        console.log(res);
-
-        setQrData([res]);
+        setQrData([obj]);
         // setQrDataStr(result?.text);
       }
     } else console.log(error);
