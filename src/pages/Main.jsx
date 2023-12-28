@@ -8,6 +8,8 @@ const Main = () => {
   const [qrData, setQrData] = useState([]);
   const [qrDataStr, setQrDataStr] = useState("");
   const [camera, setCamera] = useState(false);
+  let res = {};
+  let str;
 
   function getDateFromDayOfYear(year, dayOfYear) {
     const date = new Date(year, 0); // January 0 (yes, 0) is equivalent to December 31 of the previous year
@@ -27,8 +29,8 @@ const Main = () => {
       if (result?.text.includes("{")) {
         setQrData([JSON.parse(result.text)]);
       } else {
-        let str = result.text.split(" ");
-        let res = {};
+        str = result.text.split(" ");
+        console.log(str);
 
         let barDate = str[4].slice(0, 3);
 
@@ -79,6 +81,8 @@ const Main = () => {
                 <p>{val.airline}</p> <br />
                 <span>Class : </span>
                 <p>{val.class}</p>
+                <p>{res}</p>
+                <p>{str}</p>
               </>
             ))
           ) : (
