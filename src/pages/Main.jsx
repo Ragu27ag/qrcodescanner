@@ -75,6 +75,7 @@ const Main = () => {
           {qrDataStr === "" ? (
             qrData.map((val, i) => (
               <>
+                <p>{JSON.stringify(val)}</p>
                 <span>Name : </span>
                 <p>{val.name.toUpperCase()}</p>
                 <br />
