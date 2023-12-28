@@ -8,15 +8,15 @@ const Main = () => {
   const [qrData, setQrData] = useState([]);
   const [qrDataStr, setQrDataStr] = useState("");
   const [camera, setCamera] = useState(false);
-  let res = {};
-  let str;
+  // let res = {};
+  // let str;
 
-  function getDateFromDayOfYear(year, dayOfYear) {
-    const date = new Date(year, 0); // January 0 (yes, 0) is equivalent to December 31 of the previous year
-    date.setDate(dayOfYear); // Set the day of the year
+  // function getDateFromDayOfYear(year, dayOfYear) {
+  //   const date = new Date(year, 0); // January 0 (yes, 0) is equivalent to December 31 of the previous year
+  //   date.setDate(dayOfYear); // Set the day of the year
 
-    return date;
-  }
+  //   return date;
+  // }
 
   const scan = (error, result) => {
     console.log(result?.text);
