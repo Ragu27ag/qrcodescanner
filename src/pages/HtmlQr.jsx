@@ -4,7 +4,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 const HtmlQr = () => {
   //   const [res, setRes] = useState("");
   const [qrData, setQrData] = useState([]);
-  const [data, setData] = useState("");
+  // const [data, setData] = useState("");
 
   function getDateFromDayOfYear(year, dayOfYear) {
     const date = new Date(year, 0);
