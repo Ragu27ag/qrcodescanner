@@ -81,8 +81,6 @@ const Main = () => {
                 <p>{val.airline}</p> <br />
                 <span>Class : </span>
                 <p>{val.class}</p>
-                <p>{res}</p>
-                <p>{str}</p>
               </>
             ))
           ) : (
