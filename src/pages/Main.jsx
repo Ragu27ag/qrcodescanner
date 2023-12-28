@@ -18,7 +18,8 @@ const Main = () => {
   const getRes = (values) => {
     let res = {};
 
-    let str = values.split(" ");
+    // let str = values.split(" ");
+    let str = "M1AG/Ragunath RHKN7X CCUMAASG 607 097V00000000 000".split(" ");
     console.log(str);
 
     let barDate = str[4].slice(0, 3);
