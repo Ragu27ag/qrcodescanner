@@ -9,17 +9,41 @@ const Main = () => {
   const [qrDataStr, setQrDataStr] = useState("");
   const [camera, setCamera] = useState(false);
 
+  function getDateFromDayOfYear(year, dayOfYear) {
+    const date = new Date(year, 0); // January 0 (yes, 0) is equivalent to December 31 of the previous year
+    date.setDate(dayOfYear); // Set the day of the year
+
+    return date;
+  }
+
   const scan = (error, result) => {
-    // console.log(typeof JSON.parse(result?.text));
+    console.log(result?.text);
     if (result) {
       setQrData([]);
       setQrDataStr("");
       console.log(result?.text.includes("{"));
-      // console.log(JSON.parse(result?.text));
+      // console.log(JSON.parse(result?.text));M1AG/Ragunath RHKN7X CCUMAASG 607 097V00000000 000`
       setCamera(false);
       if (result?.text.includes("{")) {
         setQrData([JSON.parse(result.text)]);
-      } else setQrDataStr(result.text);
+      } else {
+        let str = result.text.split(" ");
+        let res = {};
+
+        let barDate = str[4].slice(0, 3);
+
+        res.name = str[0].slice(2);
+        res.pnr = str[1];
+        res.from = str[2].slice(0, 3);
+        res.to = str[2].slice(3, 6);
+        res.airline = str[2].slice(6) + " " + str[3];
+        res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
+        res.class = str[4].slice(3, 4);
+
+        console.log(res);
+
+        setQrData([res]);
+      }
     } else console.log(error);
   };
 
@@ -49,12 +73,12 @@ const Main = () => {
                 <br />
                 <span>From : </span>
                 <p>{val.from.toUpperCase()}</p> <br /> <span>To : </span>
-                <p>{val.to.toUpperCase()}</p> <br /> <span>Depature : </span>
-                <p>{val.depature}</p> <br />
-                <span>Arrival : </span>
-                <p>{val.arrival}</p> <br />
-                <span>Gate : </span>
-                <p>{val.gate}</p>
+                <p>{val.to.toUpperCase()}</p> <br /> <span>Date : </span>
+                <p>{val.date}</p> <br />
+                <span>Airline : </span>
+                <p>{val.airline}</p> <br />
+                <span>Class : </span>
+                <p>{val.class}</p>
               </>
             ))
           ) : (
