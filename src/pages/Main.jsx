@@ -29,22 +29,23 @@ const Main = () => {
       if (result?.text.includes("{")) {
         setQrData([JSON.parse(result.text)]);
       } else {
-        str = result.text.split(" ");
-        console.log(str);
+        // str = result.text.split(" ");
+        // console.log(str);
 
-        let barDate = str[4].slice(0, 3);
+        // let barDate = str[4].slice(0, 3);
 
-        res.name = str[0].slice(2);
-        res.pnr = str[1];
-        res.from = str[2].slice(0, 3);
-        res.to = str[2].slice(3, 6);
-        res.airline = str[2].slice(6) + " " + str[3];
-        res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
-        res.class = str[4].slice(3, 4);
+        // res.name = str[0].slice(2);
+        // res.pnr = str[1];
+        // res.from = str[2].slice(0, 3);
+        // res.to = str[2].slice(3, 6);
+        // res.airline = str[2].slice(6) + " " + str[3];
+        // res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
+        // res.class = str[4].slice(3, 4);
 
-        console.log(res);
+        // console.log(res);
 
-        setQrData([res]);
+        // setQrData([res]);
+        setQrData(result?.text);
       }
     } else console.log(error);
   };
@@ -64,7 +65,12 @@ const Main = () => {
           //   scanDelay={3000}
           //   constraints={{ facingMode: "environment" }}
           // />
-          <BarcodeScannerComponent width={500} height={500} onUpdate={scan} />
+          <BarcodeScannerComponent
+            width={500}
+            height={500}
+            onUpdate={scan}
+            delay={3000}
+          />
         )}
         <div className="data-div">
           {qrDataStr === "" ? (
