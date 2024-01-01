@@ -1,5 +1,5 @@
 import "./App.css";
-import HtmlQr from "./pages/HtmlQr";
+import CustomHtmlQr from "./pages/CustomHtmlQr";
 
 function App() {
   // const handleError = (error) => {
@@ -8,8 +8,9 @@ function App() {
 
   return (
     <>
-      {" "}
-      {/* <Main /> */} <HtmlQr />
+      {/* {" "}
+      <Main /> <HtmlQr /> */}
+      <CustomHtmlQr />
     </>
   );
 }
