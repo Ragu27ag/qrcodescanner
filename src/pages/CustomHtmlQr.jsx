@@ -78,7 +78,9 @@ const CustomHtmlQr = () => {
   return (
     <div>
       {" "}
+      <div>
       <h1>QR Code Scanner</h1>
+      </div>
       <div id="reader"></div>
       <div className="map-div">
         <p>{raw}</p>
@@ -104,8 +106,10 @@ const CustomHtmlQr = () => {
         ))}
       </div>
       {/* <p>{res}</p> */}
-      <button onClick={() => setStart(!start)}>Scan</button>
-      <button onClick={stopee}>Stop</button>
+      <div className="butt-div">
+        <button className="button-scan" onClick={() => setStart(!start)}>Scan</button>
+        <button  className="button-scan" onClick={stopee}>Stop</button>
+      </div>
     </div>
   );
 };

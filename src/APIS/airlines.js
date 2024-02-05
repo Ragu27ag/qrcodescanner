@@ -4,8 +4,8 @@ async function airlines(company) {
   const options = {
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": "782eb993a4msh1fd1ebb476f0c78p14e337jsnb2b5077a02e2",
-      "X-RapidAPI-Host": "airlines-by-api-ninjas.p.rapidapi.com",
+      "X-RapidAPI-Key": process.env.REACT_APP_KEY,
+      "X-RapidAPI-Host": process.env.REACT_APP_HOST,
     },
   };
 
