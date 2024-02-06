@@ -132,7 +132,7 @@ const CustomHtmlQr = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {qrData.length > 1 ? (
+              {qrData.length > 0 ? (
                 qrData.map((val, i) => (
                   <>
                     <StyledTableRow key={val.name}>
