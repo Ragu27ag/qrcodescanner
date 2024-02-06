@@ -8,8 +8,11 @@ function App() {
 
   return (
     <>
-      {/* {" "}
-      <Main /> <HtmlQr /> */}
+      {
+        /* {" "}
+      <Main /> */
+        // <HtmlQr />
+      }
       <CustomHtmlQr />
     </>
   );

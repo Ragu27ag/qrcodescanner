@@ -7,8 +7,7 @@ body {
   width: 300px;
 }
 
-
-.main-div{
+.main-div {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -29,6 +28,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   margin: 5px;
+  padding: 20px;
 }
 
 .button-scan {
@@ -41,12 +41,11 @@ body {
   cursor: pointer;
   font-size: small;
   font-family: "Poppins";
-  transition: transform 0.3s ease-in;
+  transition: opacity 0.3s ease;
 }
 
-.button-scan :hover {
-  opacity: 1;
-  transform: translateX(-10px);
+.button-scan:hover {
+  opacity: 0.7;
 }
 
 .heading {
@@ -83,14 +82,19 @@ body {
   font-size: small;
 }
 
-/* .map-div {
+.map-div {
   display: flex;
   align-items: center;
   justify-content: center;
-} */
+  margin-top: 10px;
+}
 
 .map-div p {
   display: inline-block;
   color: rgb(214, 214, 214);
   word-wrap: break-word;
+}
+
+.heading-div {
+  text-align: center;
 }
