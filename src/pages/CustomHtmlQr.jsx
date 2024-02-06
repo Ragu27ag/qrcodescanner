@@ -11,6 +11,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import airport from "../APIS/airport";
+import { Button } from "@mui/material";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import StopIcon from "@mui/icons-material/Stop";
 
 const CustomHtmlQr = () => {
   const [qrData, setQrData] = useState([]);
@@ -20,7 +23,7 @@ const CustomHtmlQr = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
+      backgroundColor: "rgb(245, 139, 64)",
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
@@ -167,12 +170,28 @@ const CustomHtmlQr = () => {
       </div>
       {/* <p>{res}</p> */}
       <div className="butt-div">
-        <button className="button-scan" onClick={() => setStart(!start)}>
+        <Button
+          variant="contained"
+          className="button-scan"
+          onClick={() => setStart(!start)}
+          sx={{
+            backgroundColor: "rgb(245, 139, 64)",
+          }}
+        >
+          <QrCodeScannerIcon />
           Scan
-        </button>
-        <button className="button-scan" onClick={stopee}>
+        </Button>
+        <Button
+          variant="contained"
+          className="button-scan"
+          sx={{
+            backgroundColor: "rgb(245, 139, 64)",
+          }}
+          onClick={stopee}
+        >
+          <StopIcon />
           Stop
-        </button>
+        </Button>
       </div>
     </div>
   );
