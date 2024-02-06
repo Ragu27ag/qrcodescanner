@@ -10,6 +10,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import airport from "../APIS/airport";
 
 const CustomHtmlQr = () => {
   const [qrData, setQrData] = useState([]);
@@ -54,14 +55,17 @@ const CustomHtmlQr = () => {
 
     let air = await airlines(str[2].slice(6));
 
-    console.log(air);
+    let depature = await airport(str[2].slice(0, 3));
+    let arrival = await airport(str[2].slice(3, 6));
+
+    console.log(air, depature, arrival);
 
     let barDate = str[4].slice(0, 3);
 
     res.name = str[0].slice(2);
     res.pnr = str[1];
-    res.from = str[2].slice(0, 3);
-    res.to = str[2].slice(3, 6);
+    res.from = depature;
+    res.to = arrival;
     res.airline = air + " " + str[3];
     res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
     res.class = str[4].slice(3, 4);
@@ -76,7 +80,7 @@ const CustomHtmlQr = () => {
   );
 
   useEffect(() => {
-    const html5QrCode = new Html5Qrcode("reader");
+    const html5QrCode = new Html5Qrcode("reader", { interval: 4000 });
     setreff(html5QrCode);
     async function success(result) {
       setStart(false);

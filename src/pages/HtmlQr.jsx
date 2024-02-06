@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import "../CSS/main.css";
 import airlines from "../APIS/airlines";
+import airport from "../APIS/airport";
 
 const HtmlQr = () => {
   //   const [res, setRes] = useState("");
@@ -27,6 +28,8 @@ const HtmlQr = () => {
       console.log(str);
 
       let air = await airlines(str[2].slice(6));
+      let depature = await airport(str[2].slice(0, 3));
+      let arrival = await airport(str[2].slice(3, 6));
 
       console.log(air);
 
@@ -34,8 +37,8 @@ const HtmlQr = () => {
 
       res.name = str[0].slice(2);
       res.pnr = str[1];
-      res.from = str[2].slice(0, 3);
-      res.to = str[2].slice(3, 6);
+      res.from = depature;
+      res.to = arrival;
       res.airline = air + " " + str[3];
       res.date = getDateFromDayOfYear(2023, +barDate).toDateString();
       res.class = str[4].slice(3, 4);
