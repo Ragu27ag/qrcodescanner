@@ -1,12 +1,12 @@
 async function airport(airport) {
   console.log(airport);
-  const url = `https://airports15.p.rapidapi.com/airports?iataCode=${airport}`;
+  const url = `https://airports-by-api-ninjas.p.rapidapi.com/v1/airports?iata=${airport}`;
 
   const options = {
     method: "GET",
     headers: {
       "X-RapidAPI-Key": process.env.REACT_APP_KEY,
-      "X-RapidAPI-Host": process.env.REACT_APP_AIRPORT_HOST,
+      "X-RapidAPI-Host": process.env.REACT_APP_AP, // "airports-by-api-ninjas.p.rapidapi.com",
     },
   };
 
