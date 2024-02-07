@@ -3,12 +3,16 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import "../CSS/main.css";
 import airlines from "../APIS/airlines";
 import airport from "../APIS/airport";
+import backendInstance from "../Axios/axios";
+import Snacks from "../Components/Snacks";
+import Snackbar from "@mui/material/Snackbar";
 
 const HtmlQr = () => {
   //   const [res, setRes] = useState("");
   const [qrData, setQrData] = useState([]);
   const [raw, setRaw] = useState("");
   const [start, setStart] = useState(false);
+  const [snacks, setSnacks] = useState(false);
 
   // const [data, setData] = useState("");
 
@@ -63,7 +67,19 @@ const HtmlQr = () => {
       let obj = await getRes(result);
       console.log(obj);
 
-      setQrData([obj]);
+      setQrData([...qrData, obj]);
+
+      const { data } = await backendInstance.post("/scannedData", obj);
+      console.log(data);
+      if (data.message === "data inserted") {
+        console.log("if");
+        setSnacks(true);
+        setTimeout(() => setSnacks(false), 2000);
+      } else {
+        setSnacks(true);
+        setTimeout(() => setSnacks(false), 2000);
+      }
+
       //   setRes(result);
     }
 
@@ -82,6 +98,13 @@ const HtmlQr = () => {
     <div>
       <h1>QR Code Scanner</h1>
       <div id="reader"></div>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={snacks}
+        message={"Inserted Successfully"}
+        key={"topcenter"}
+      />
+      ;
       <div className="map-div">
         <p>{raw}</p>
         {qrData.map((val, i) => (

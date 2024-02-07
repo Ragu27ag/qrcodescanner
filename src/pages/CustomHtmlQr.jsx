@@ -12,14 +12,23 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import airport from "../APIS/airport";
 import { Button } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
+import Skeleton from "@mui/material/Skeleton";
+
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import StopIcon from "@mui/icons-material/Stop";
+import backendInstance from "../Axios/axios";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const CustomHtmlQr = () => {
   const [qrData, setQrData] = useState([]);
   const [raw, setRaw] = useState("");
   const [start, setStart] = useState(false);
   const [reff, setreff] = useState("");
+  const [snacks, setSnacks] = useState(false);
+  const [insert, setInsert] = useState(false);
+  const [resultData, setResultData] = useState({});
+  const [skeleton, setSkeleton] = useState(false);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -86,33 +95,60 @@ const CustomHtmlQr = () => {
     const html5QrCode = new Html5Qrcode("reader", { interval: 4000 });
     setreff(html5QrCode);
     async function success(result) {
+      setInsert(true);
       setStart(false);
       html5QrCode.stop();
-      console.log(result);
-      let obj = await getRes(result);
-      console.log(obj);
+      console.log("res", result);
+      setSkeleton(true);
+      setResultData(await getRes(result));
+      setSkeleton(false);
 
-      setQrData([...qrData, obj]);
       //   setRes(result);
     }
 
     console.log("rendering");
 
     if (start) {
+      setInsert(false);
       html5QrCode.start({ facingMode: "environment" }, config, success);
     }
   }, [config, getRes, start, qrData]);
+
+  useEffect(() => {
+    setQrData([resultData]);
+  }, [resultData]);
+
+  console.log("qr", qrData);
 
   function stopee() {
     setStart(false);
     if (start) reff.stop();
   }
 
-  console.log(start);
+  const insertData = async () => {
+    const { data } = await backendInstance.post("/scannedData", resultData);
+
+    if (data.message === "data inserted") {
+      console.log("if");
+      setSnacks(true);
+      setTimeout(() => setSnacks(false), 2000);
+    } else {
+      setSnacks(true);
+      setTimeout(() => setSnacks(false), 2000);
+    }
+  };
+
+  console.log(qrData);
 
   return (
     <div>
       {" "}
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={snacks}
+        message={"Inserted Successfully"}
+        key={"topcenter"}
+      />
       <div className="heading-div">
         <h1>QR Code Scanner</h1>
       </div>
@@ -136,31 +172,41 @@ const CustomHtmlQr = () => {
             </TableHead>
             <TableBody>
               {qrData.length > 0 ? (
-                qrData.map((val, i) => (
-                  <>
-                    <StyledTableRow key={val.name}>
-                      <StyledTableCell component="th" scope="val">
-                        {val.name}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {val.from}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">{val.to}</StyledTableCell>
-                      <StyledTableCell align="right">
-                        {val.date}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {val.airline}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {val.class}
-                      </StyledTableCell>
-                      <StyledTableCell align="right">
-                        {val.seat}
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  </>
-                ))
+                skeleton ? (
+                  <Skeleton
+                    width={550}
+                    animation="wave"
+                    sx={{ bgcolor: "grey.900" }}
+                  />
+                ) : (
+                  qrData.map((val, i) => (
+                    <>
+                      <StyledTableRow key={val.name}>
+                        <StyledTableCell component="th" scope="val">
+                          {val.name}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {val.from}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {val.to}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {val.date}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {val.airline}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {val.class}
+                        </StyledTableCell>
+                        <StyledTableCell align="right">
+                          {val.seat}
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    </>
+                  ))
+                )
               ) : (
                 <StyledTableCell align="center"></StyledTableCell>
               )}
@@ -192,6 +238,20 @@ const CustomHtmlQr = () => {
           <StopIcon />
           Stop
         </Button>
+        {insert && (
+          <Button
+            variant="contained"
+            className="button-scan"
+            sx={{
+              backgroundColor: "rgb(245, 139, 64)",
+              padding: "5px",
+            }}
+            onClick={insertData}
+          >
+            <CloudUploadIcon fontSize="small" />
+            &nbsp;Insert
+          </Button>
+        )}
       </div>
     </div>
   );
